@@ -1,0 +1,10 @@
+{
+  "skills": [
+    {
+      "name": "remotion-best-practices",
+      "path": "skills/remotion-dev-skills/skills/remotion",
+      "description": "Best practices for Remotion - Video creation in React",
+      "tags": ["remotion", "video", "react", "animation", "composition"]
+    }
+  ]
+}
