@@ -1,0 +1,27 @@
+{
+  "name": "failure-flow-animation",
+  "version": "1.0.0",
+  "description": "Animación de flujo de fallos de aplicación móvil",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render FailureFlow out/video.mp4",
+    "upgrade": "remotion upgrade",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/cli": "^4.0.409",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "remotion": "^4.0.409"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

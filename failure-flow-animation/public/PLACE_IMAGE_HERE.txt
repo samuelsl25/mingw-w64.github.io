@@ -1,0 +1,21 @@
+IMPORTANTE: Coloca tu imagen del diagrama de flujo aquí
+
+Nombre del archivo requerido: flow-diagram.png
+
+Pasos:
+1. Guarda la captura de pantalla del diagrama de flujo
+2. Renómbrala como "flow-diagram.png"
+3. Colócala en esta carpeta (public/)
+4. Ejecuta "npm start" para ver la animación
+
+La imagen debe ser la captura de pantalla que muestra el flujo con:
+- Cliente
+- Asesores
+- Call Center
+- WhatsApp
+- SOS Digital
+- Formulario
+- Correo (Gmail)
+- Areas del Banco
+- Product Owner
+- Gerentes de Productos
