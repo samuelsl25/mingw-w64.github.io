@@ -1,0 +1,342 @@
+<style>
+/* Vistas complementarias: Productividad por zona (lupa) y Centro de Negocios · Libranza. */
+.v-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--red);color:#fff;border-radius:12px;padding:14px 22px;margin-bottom:22px;box-shadow:0 6px 18px #db163422}
+.v-banner h2{font-size:22px;margin:0;letter-spacing:-.4px;font-weight:800}.v-banner-meta{font-size:11px;opacity:.9}
+.v-banner label{flex-direction:row;align-items:center;gap:9px;color:#fff;font-size:11px}.v-banner select{min-width:190px;height:34px;border:0;font-weight:650;color:#3b4250}
+.v-status{margin-bottom:18px}.v-status:empty{display:none}
+.v-step{display:flex;align-items:center;margin:0 0 16px}.v-step>b{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;font-size:22px;font-weight:800;position:relative;z-index:1;flex-shrink:0;box-shadow:0 3px 9px #db163430}
+.v-step>span{border:1.5px solid var(--red);border-left:0;border-radius:0 22px 22px 0;padding:6px 26px 6px 30px;margin-left:-18px;font-size:17px;font-weight:800;color:#1f2430;background:#fff;min-width:210px;text-align:center}
+.v-zone-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:22px;align-items:start}.v-left{display:grid;gap:22px}.v-block{padding:20px 22px}
+.v-table{width:100%;border-collapse:separate;border-spacing:2px;font-size:13px;white-space:nowrap}.v-table th,.v-table td{background:#f2f2f2;border:0;padding:8px 12px;text-align:center;color:#1f2430;text-transform:none;letter-spacing:0;font-size:13px}
+.v-table th{font-weight:700}.v-table td:first-child{text-align:center}.v-table tr.v-total td{font-weight:800}.v-table .negative{color:#c0283f}
+.v-table-note{font-size:10px;color:var(--muted);margin-top:8px}
+.v-right{padding:20px 22px}.v-agency-count{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}.v-agency-count strong{font-size:30px;color:#a3001b;letter-spacing:-.8px;font-weight:800}.v-agency-count span{font-size:10px;color:var(--muted)}
+.v-matrix{display:grid;grid-template-columns:22px 62px repeat(4,minmax(0,1fr));grid-auto-rows:auto;gap:2px;align-items:stretch}
+.v-axis-y{grid-row:1/5;grid-column:1;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-weight:800;color:#555c69;font-size:15px}
+.v-rowlabel{grid-column:2;display:flex;align-items:center;font-size:10px;color:#5f6673}.v-collabel{font-size:10px;color:#5f6673;text-align:center;padding-top:6px}.v-axis-x{grid-column:3/7;text-align:center;font-weight:800;color:#555c69;font-size:15px;padding-top:6px}
+.v-cell{height:58px;border:0;border-radius:2px;font-size:24px;font-weight:800;color:#1f2430;display:grid;place-items:center;transition:transform .15s,box-shadow .15s;position:relative}
+.v-cell:not(:disabled):hover{transform:scale(1.04);box-shadow:0 4px 14px #1f243026;z-index:1}.v-cell:disabled{opacity:1;cursor:default}
+.v-cell.selected{outline:3px solid #1f2430;outline-offset:-3px}.v-cell:not(:disabled)::after{content:'⌕';position:absolute;right:6px;bottom:3px;font-size:11px;color:#1f243066}
+.t0{background:#e6b8ae}.t1{background:#f4cccc}.t2{background:#fce5cd}.t3{background:#fff2cc}.t5{background:#d9ead3}
+.v-lists{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}.v-list{padding:14px 16px;min-height:150px;border-radius:2px}.v-list h3{font-size:19px;margin:0 0 8px;color:#4a505b;font-weight:800}
+.v-good{background:#d9ead3}.v-bad{background:#e6b8ae}.v-mid{background:#fce5cd}.v-soft{background:#fff2cc}.v-neutral{background:#eceef3}
+.v-link{display:block;border:0;background:transparent;padding:2px 0;font-size:16px;color:#4a505b;text-align:left;width:100%}.v-link:hover{color:#a3001b;text-decoration:underline}.v-link small{font-size:10px;color:#6f7682;margin-left:6px}
+.v-empty-list{font-size:11px;color:#6f7682}
+.v-drill{margin-top:24px;padding:20px 22px}.v-crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:16px;font-size:12px}.v-crumbs button{border:1px solid #e3e6ed;background:#fafbfc;border-radius:20px;padding:5px 12px;font-size:11px;color:#59606d;font-weight:600}.v-crumbs button:hover{border-color:#e8bcc6;color:#b5213d}.v-crumbs button[aria-current=page]{background:var(--red);border-color:var(--red);color:#fff}.v-crumbs i{color:#b0b6c1;font-style:normal}
+.v-drill h3{font-size:17px;margin:0 0 4px}.v-drill-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}.v-drill-head p{font-size:11px}
+.v-agency-table tbody tr{cursor:pointer}.v-agency-table tbody tr:hover{background:#fdf7f8}.v-agency-table td{padding:11px 14px}
+.v-cat{display:inline-flex;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:700;white-space:nowrap}.v-cat.decrece{background:#f6d4d0;color:#9c2b2b}.v-cat.low{background:#fbe6d2;color:#93591d}.v-cat.mid{background:#fff2cc;color:#8a6a11}.v-cat.high{background:#d9ead3;color:#2f6a2a}
+.v-chips{display:flex;gap:3px;flex-wrap:wrap}.v-chip{font-size:9px;font-weight:700;border-radius:6px;padding:2px 6px}.b-high{background:#cfe8d6;color:#196a47}.b-potential{background:#d9ead3;color:#3b6b30}.b-development{background:#fff2cc;color:#85650f}.b-support{background:#f4cccc;color:#9b2c3b}.b-none{background:#eceef3;color:#6c7380}
+.v-kpis{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 18px}.v-kpi{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#fbfbfd}.v-kpi span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}.v-kpi strong{display:block;font-size:24px;margin:5px 0 2px;color:#2a303b}.v-kpi small{font-size:11px;color:#6f7682}.v-kpi span.v-cat{display:inline-flex;text-transform:none;letter-spacing:0}
+.v-bar{height:6px;background:#eef0f4;border-radius:6px;overflow:hidden;min-width:70px}.v-bar i{display:block;height:100%;border-radius:6px}
+.v-band-tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.v-band-tile{border:1px solid transparent;border-radius:10px;padding:10px 12px;text-align:left;color:#333a46}.v-band-tile strong{display:block;font-size:24px;line-height:1.2}.v-band-tile span{font-size:10px;font-weight:700}.v-band-tile[aria-pressed=true]{border-color:#1f2430;box-shadow:0 2px 8px #1f24301a}
+.v-advisors{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}.v-advisor{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;text-align:left;color:#3d4451}.v-advisor:hover{border-color:#e4adba;box-shadow:0 3px 12px #26375010}.v-advisor .advisor-photo{width:38px;height:38px;border-radius:10px;font-size:11px}.v-advisor>span:nth-child(2){flex:1;min-width:0}.v-advisor strong{display:block;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.v-advisor small{display:block;font-size:9px;color:#8a919d;margin-top:2px}.v-advisor b{font-size:18px;color:#2f3744}.v-advisor b small{display:block;font-size:8px;text-align:right;font-weight:500}
+.v-note{font-size:10px;color:#7c8492;line-height:1.6;margin-top:10px}
+/* Centro de Negocios */
+.v-cn-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr) minmax(0,1.2fr);gap:22px;align-items:center;margin-bottom:26px}
+.v-vars h4{margin:0 0 6px;font-size:14px;color:#4a505b}.v-vars ul{margin:0;padding-left:22px;color:#4a505b;font-size:14px;line-height:1.6}.v-vars p{font-size:10px;margin-top:8px;line-height:1.6}
+.v-bands-box{border:3px solid #24323a;background:#f2f2f2;padding:12px 16px;display:grid;grid-template-columns:1fr auto;gap:2px 22px;font-size:14px;color:#4a505b}
+.v-headcount{display:flex;align-items:center;gap:20px;flex-wrap:wrap}.v-headcount .v-big{text-align:center}.v-headcount .v-big strong{display:block;font-size:68px;line-height:1;color:#c00018;font-weight:800;letter-spacing:-2px}.v-headcount .v-big span{font-size:24px;color:#5f6673}
+.v-headcount ul{list-style:none;margin:0;padding:0;font-size:15px;color:#5f6673;line-height:1.5}.v-headcount li small{font-size:10px}.v-headcount .v-meta{margin-top:8px;font-size:14px;color:#5f6673}.v-headcount .v-meta strong{display:block;font-size:20px;color:#3f4652}
+.v-cn-zones{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:26px;margin-bottom:24px}
+.v-zone-panel{min-width:0}.v-zone-main{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;align-items:center;margin:4px 0 22px}
+.v-growth{text-align:center}.v-growth strong{display:block;font-size:38px;color:#5f6673;font-weight:800;letter-spacing:-1px}.v-growth span{font-size:11px;color:#6f7682;line-height:1.3;display:block}
+.v-quad{display:grid;grid-template-columns:1fr 1fr;border:1px solid #9aa0aa;max-width:420px}.v-quad button{border:1px solid #9aa0aa;background:#fff;padding:14px 8px;text-align:center;color:#1f2430}.v-quad button strong{display:block;font-size:15px}.v-quad button b{display:block;font-size:28px;color:#c00018;line-height:1.2}.v-quad button:hover{background:#fdf5f6}.v-quad button[aria-pressed=true]{background:#fff0f2;box-shadow:inset 0 0 0 2px var(--red)}
+.v-cn-lists{display:grid;grid-template-columns:1fr 1fr;gap:16px}.v-cn-lists.single{grid-template-columns:1fr}.v-cn-lists .v-list{min-height:170px}.v-list-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.v-list-head button{border:0;background:transparent;font-size:10px;color:#5f6673;text-decoration:underline}
+.v-zone-foot{font-size:10px;color:#6f7682;margin-top:10px;line-height:1.6}
+.v-heat{font-weight:700;font-size:11px}.h4{background:#c9e4c5!important}.h3{background:#e2f0d9!important}.h2{background:#fff2cc!important}.h1{background:#f8d7d3!important}.h0{background:#f2f2f2!important;color:#9aa0aa}
+.v-exec-table td,.v-exec-table th{padding:8px 9px}.v-exec-table tbody tr{cursor:pointer}.v-exec-table tbody tr:hover td{filter:brightness(.97)}.v-exec-table td:nth-child(1){text-align:left}
+.v-section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.v-section-title h3{margin:0;font-size:15px}
+.v-chart svg{width:100%;height:auto;display:block}
+.v-extras-card{padding:20px 24px;margin-bottom:20px}.v-extras-card .sourceitem{padding:14px 0}
+@media(max-width:1100px){.v-zone-grid{grid-template-columns:1fr}.v-cn-top{grid-template-columns:1fr 1fr}.v-headcount{grid-column:1/-1}}
+@media(max-width:700px){.v-cn-top{grid-template-columns:1fr}.v-cn-zones{grid-template-columns:1fr}.v-lists,.v-cn-lists{grid-template-columns:1fr}.v-band-tiles{grid-template-columns:repeat(3,1fr)}.v-kpis{grid-template-columns:1fr}.v-zone-main{grid-template-columns:1fr}.v-step>span{min-width:0;font-size:15px}.v-banner h2{font-size:18px}.v-matrix{grid-template-columns:18px 48px repeat(4,minmax(0,1fr))}.v-cell{height:48px;font-size:19px}.v-list h3{font-size:16px}.v-link{font-size:14px}}
+</style>
+<script>
+(() => {
+  'use strict';
+  const A = window.PulsoApp;
+  if (!A) { console.error('Views: falta window.PulsoApp en Client.html.'); return; }
+  const $ = id => document.getElementById(id);
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const f1 = new Intl.NumberFormat('es-HN', { minimumFractionDigits: 1, maximumFractionDigits: 1 }), f0 = new Intl.NumberFormat('es-HN', { maximumFractionDigits: 0 });
+  const moneyFmt = new Intl.NumberFormat('es-HN', { style: 'currency', currency: 'HNL', maximumFractionDigits: 0 });
+  const mill = v => v == null || !Number.isFinite(v) ? '—' : f1.format(v / 1e6);
+  const pc = r => r == null || !Number.isFinite(r) ? '—' : f0.format(r * 100) + '%';
+  const cash = v => v == null || !Number.isFinite(v) ? '—' : moneyFmt.format(v);
+  const neg = v => Number.isFinite(v) && v < 0 ? ' class="negative"' : '';
+  const ccKey = v => String(v == null ? '' : v).trim().replace(/\.0+$/, '').replace(/^0+(?=\d)/, '');
+  const CATS = [{ key: 'decrece', label: 'Decrece' }, { key: 'low', label: '0-79%' }, { key: 'mid', label: '80-99%' }, { key: 'high', label: '≥100%' }];
+  const catLabel = k => (CATS.find(c => c.key === k) || {}).label || 'Sin dato';
+  const TONE = { high: { decrece: 't3', low: 't3', mid: 't5', high: 't5' }, mid: { decrece: 't2', low: 't2', mid: 't5', high: 't5' },
+    low: { decrece: 't1', low: 't2', mid: 't2', high: 't3' }, decrece: { decrece: 't0', low: 't1', mid: 't2', high: 't3' } };
+  const BANDS = [{ key: 'high', label: 'Alto Rendimiento', min: 100, cls: 'v-good' }, { key: 'potential', label: 'Potencial', min: 80, cls: 'v-good' },
+    { key: 'development', label: 'En desarrollo', min: 60, cls: 'v-soft' }, { key: 'support', label: 'Acompañamiento', min: null, cls: 'v-bad' }];
+  const advisorBand = r => { const v = r && r.score ? r.score.value : null; if (!Number.isFinite(v)) return 'none'; return BANDS.find(b => b.min == null || v + 1e-9 >= b.min).key; };
+  const bandLabel = k => k === 'none' ? 'Sin score' : (BANDS.find(b => b.key === k) || {}).label || k;
+  const V = { page: null, zone: null, zoneKey: null, cell: null, agency: null, advisorBand: null, cn: null, cnBand: {}, extras: null, lastData: null, timer: null };
+
+  /* ---------- Estructura: menú y páginas ---------- */
+  const heading = document.querySelector('.heading h1'), headingText = heading ? heading.textContent : '', subheading = document.querySelector('.heading p'), subText = subheading ? subheading.textContent : '';
+  const dashNav = document.querySelector('[data-nav="dashboard"]');
+  dashNav.insertAdjacentHTML('afterend', '<button class="nav" data-nav="zone"><span>▣</span> Productividad por zona</button><button class="nav" data-nav="cn"><span>◈</span> Centro de Negocios</button>');
+  const footer = document.querySelector('#mainContent > footer');
+  footer.insertAdjacentHTML('beforebegin', '<section id="zonePage" class="hidden"><div class="v-banner"><h2 id="zoneTitle">Productividad por zona</h2><label>Zona<select id="zoneSelect" aria-label="Zona"></select></label></div><div id="zoneStatus" class="v-status"></div>'
+    + '<div id="zoneBody" class="v-zone-grid hidden"><div class="v-left"><section class="card v-block"><div class="v-step"><b>1</b><span>Cartera Activa</span></div><div id="zoneActiva"></div></section><section class="card v-block"><div class="v-step"><b>2</b><span>Cartera Pasiva</span></div><div id="zonePasiva"></div></section></div>'
+    + '<section class="card v-right" aria-labelledby="zoneAgencyCount"><div class="v-agency-count"><strong id="zoneAgencyCount"></strong><span>⌕ Haz clic en un cuadro o en una agencia para acercarte</span></div><div id="zoneMatrix"></div>'
+    + '<div class="v-lists"><div class="v-list v-good"><h3>Top Agencias</h3><div id="zoneTop"></div></div><div class="v-list v-bad"><h3>Crítico Agencias</h3><div id="zoneCritical"></div></div></div></section></div>'
+    + '<section id="zoneDrill" class="card v-drill hidden" aria-live="polite"><nav class="v-crumbs" id="zoneCrumbs" aria-label="Nivel de detalle"></nav><div id="zoneDrillBody"></div></section></section>'
+    + '<section id="cnPage" class="hidden"><div class="v-banner"><h2>Productividad Comercial Libranza</h2><span id="cnCut" class="v-banner-meta"></span></div><div id="cnStatus" class="v-status"></div><div id="cnBody" class="hidden">'
+    + '<div class="v-cn-top"><div class="v-vars"><h4>Variables consideradas</h4><ul><li>Cumplimiento de Meta</li><li>Constancia</li></ul><p id="cnFormula"></p></div><div class="v-bands-box" id="cnBands"></div><div class="v-headcount" id="cnHeadcount"></div></div>'
+    + '<div class="v-cn-zones" id="cnZones"></div><section class="card v-block"><div class="v-section-title"><div><h3>Detalle por ejecutivo</h3><p class="small">Cumplimiento mensual del histórico · clic para ver el perfil</p></div></div><div class="tablewrap" id="cnTable"></div><p class="v-note" id="cnTableNote"></p></section></div></section>');
+  const PAGES = ['dashboard', 'method', 'sources', 'zone', 'cn'];
+  function showPage(page) {
+    V.page = page;
+    document.querySelectorAll('[data-nav]').forEach(b => b.classList.toggle('active', b.dataset.nav === page));
+    PAGES.forEach(p => { const el = $(p + 'Page'); if (el) el.classList.toggle('hidden', p !== page); });
+    if (heading) heading.textContent = page === 'zone' ? 'Productividad por zona' : page === 'cn' ? 'Centro de Negocios · Libranza' : headingText;
+    if (subheading) subheading.textContent = page === 'zone' ? 'De la zona a la agencia y de la agencia al asesor, con lupa.' : page === 'cn' ? 'Score de ejecutivos de Libranza: cumplimiento de meta y constancia.' : subText;
+    clearInterval(V.timer);
+    if (page === 'zone') { loadZone(); V.timer = setInterval(() => { if (A.data() !== V.lastData) renderDrill(); }, 1500); }
+    if (page === 'cn') loadCn();
+    if (page === 'sources') loadExtrasStatus();
+  }
+  document.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.nav === 'zone' || b.dataset.nav === 'cn') { showPage(b.dataset.nav); A.toggleMenu(false); }
+    else { ['zone', 'cn'].forEach(p => $(p + 'Page').classList.add('hidden')); clearInterval(V.timer); V.page = b.dataset.nav; if (heading) heading.textContent = headingText; if (subheading) subheading.textContent = subText; if (b.dataset.nav === 'sources') loadExtrasStatus(); }
+  }));
+  const statusBox = (id, html) => { $(id).innerHTML = html; };
+  const loadingHtml = text => '<div class="loading"><span class="spinner"></span><span>' + esc(text) + '</span></div>';
+  function unavailable(type, status) {
+    const s = status && status.sources && status.sources[type], err = status && status.errors && status.errors[type];
+    const files = { growth: '«Crecimiento por CC…» (.xlsx, Google Sheets o .csv)', libranza: '«LibranzaCN…» (.xlsx, Google Sheets o .csv)' };
+    return '<div class="notice">' + (err ? 'La última lectura falló: ' + esc(err) + '<br>' : '') + 'Aún no hay datos publicados para esta vista. Coloca ' + files[type] + ' en la carpeta de fuentes y pulsa <b>Actualizar datos</b>'
+      + (A.canManage() ? '' : ' (administrador)') + '. ' + (s && s.name ? 'Archivo detectado: ' + esc(s.name) + '.' : '') + '</div>';
+  }
+
+  /* ---------- Productividad por zona ---------- */
+  async function loadZone(force) {
+    if (V.zone && !force) { renderZone(); return; }
+    statusBox('zoneStatus', loadingHtml('Cargando el crecimiento por agencia…'));
+    try {
+      const data = await A.rpc('getZoneProductivity');
+      V.zone = data;
+      if (!data.available) { statusBox('zoneStatus', unavailable('growth', data.status)); $('zoneBody').classList.add('hidden'); $('zoneDrill').classList.add('hidden'); return; }
+      statusBox('zoneStatus', '');
+      $('zoneSelect').innerHTML = data.zones.map(z => '<option value="' + esc(z.key) + '">' + esc(z.name) + '</option>').join('');
+      if (!data.zones.some(z => z.key === V.zoneKey)) V.zoneKey = data.zones[0] ? data.zones[0].key : null;
+      $('zoneSelect').value = V.zoneKey || '';
+      renderZone();
+    } catch (e) { statusBox('zoneStatus', '<div class="notice">' + esc(e.message) + '</div>'); }
+  }
+  const currentZone = () => V.zone && V.zone.available ? V.zone.zones.find(z => z.key === V.zoneKey) : null;
+  function carteraTable(items, total, caption) {
+    return '<div class="tablewrap"><table class="v-table"><thead><tr><th rowspan="2"></th><th colspan="2">' + esc(caption) + '</th><th rowspan="2">%<br>Cumplimiento</th></tr><tr><th>Crecimiento</th><th>Meta</th></tr></thead><tbody>'
+      + items.map(p => '<tr><td>' + esc(p.label) + '</td><td' + neg(p.growth) + '>' + mill(p.growth) + '</td><td>' + mill(p.plan) + '</td><td' + neg(p.ratio) + '>' + pc(p.ratio) + '</td></tr>').join('')
+      + '<tr class="v-total"><td>Total</td><td' + neg(total.growth) + '>' + mill(total.growth) + '</td><td>' + mill(total.plan) + '</td><td' + neg(total.ratio) + '>' + pc(total.ratio) + '</td></tr></tbody></table></div>';
+  }
+  function renderZone() {
+    const z = currentZone(), d = V.zone;if (!z) return;
+    $('zoneBody').classList.remove('hidden');
+    $('zoneTitle').textContent = 'Productividad ' + (z.key === '*' ? 'de todas las zonas' : 'Zona ' + z.name);
+    const cut = d.cut || 'la fecha del archivo';
+    $('zoneActiva').innerHTML = carteraTable(z.activa, z.totals.activa, 'Cifras a ' + cut) + '<p class="v-table-note">Millones de lempiras. Crecimiento acumulado del año frente al plan.</p>';
+    $('zonePasiva').innerHTML = carteraTable(z.pasiva, z.totals.pasiva, 'Cifras acumuladas a ' + cut) + '<p class="v-table-note">Vista incluye DBV (Vista ' + mill(z.pasivaDetail[0].growth) + ' + DBV ' + mill(z.pasivaDetail[1].growth) + '), como en el reporte de zona.</p>';
+    $('zoneAgencyCount').textContent = z.agencies.length + ' Agencias';
+    const rows = ['high', 'mid', 'low', 'decrece'], cols = ['decrece', 'low', 'mid', 'high'], rowLabels = { high: '>100%', mid: '80-100%', low: '0-79%', decrece: 'Decrece' };
+    let html = '<div class="v-matrix" role="grid" aria-label="Agencias por cumplimiento de activos (columnas) y pasivos (filas)"><div class="v-axis-y">Pasivos</div>';
+    rows.forEach((p, i) => {
+      html += '<div class="v-rowlabel" style="grid-row:' + (i + 1) + '">' + rowLabels[p] + '</div>';
+      cols.forEach((a, j) => {
+        const n = z.matrix[a + '|' + p] || 0, sel = V.cell === a + '|' + p;
+        html += '<button type="button" class="v-cell ' + TONE[p][a] + (sel ? ' selected' : '') + '" style="grid-row:' + (i + 1) + ';grid-column:' + (j + 3) + '" data-cell="' + a + '|' + p + '"' + (n ? '' : ' disabled') + ' aria-label="Activos ' + catLabel(a) + ', pasivos ' + catLabel(p) + ': ' + n + ' agencias">' + (n || '') + '</button>';
+      });
+    });
+    html += '<div></div><div></div>' + cols.map(a => '<div class="v-collabel">' + (a === 'high' ? '>100%' : a === 'mid' ? '80-100%' : catLabel(a)) + '</div>').join('') + '<div></div><div></div><div class="v-axis-x">Activos</div></div>';
+    $('zoneMatrix').innerHTML = html;
+    const link = a => '<button type="button" class="v-link" data-agency="' + esc(a.cc) + '">' + esc(a.short) + '</button>';
+    $('zoneTop').innerHTML = z.top.length ? z.top.map(link).join('') : '<p class="v-empty-list">Ninguna agencia con activos ≥100% y pasivos ≥80%.</p>';
+    $('zoneCritical').innerHTML = z.critical.length ? z.critical.map(link).join('') : '<p class="v-empty-list">Ninguna agencia decrece en activos y pasivos a la vez.</p>';
+    renderDrill();
+  }
+  function advisorsByCc() {
+    const data = A.data(), map = {};
+    if (!data) return null;
+    data.rows.forEach(r => (r.agencies || []).forEach(cc => (map[ccKey(cc)] || (map[ccKey(cc)] = [])).push(r)));
+    return map;
+  }
+  function bandCounts(list) { const c = { high: 0, potential: 0, development: 0, support: 0, none: 0 }; (list || []).forEach(r => c[advisorBand(r)]++); return c; }
+  function chips(list) {
+    if (!list) return '<span class="v-empty-list">—</span>';
+    if (!list.length) return '<span class="v-empty-list">0</span>';
+    const c = bandCounts(list);
+    return '<span class="v-chips"><b style="font-size:11px;margin-right:4px">' + list.length + '</b>' + ['high', 'potential', 'development', 'support', 'none'].filter(k => c[k]).map(k => '<span class="v-chip b-' + k + '" title="' + esc(bandLabel(k)) + '">' + c[k] + ' ' + ({ high: 'Alto', potential: 'Pot.', development: 'Des.', support: 'Acomp.', none: 'Sin score' }[k]) + '</span>').join('') + '</span>';
+  }
+  function periodNote() {
+    const d = A.data();
+    if (!d) return 'Los asesores provienen del Panel de asesores; aún no hay datos cargados allí.';
+    return 'Asesores según el Panel de asesores · ' + (d.mode === 'cierre' ? 'cierre registrado' : 'seguimiento diario') + ' · ' + (d.dateMode === 'range' ? A.dateLabel(d.from) + ' → ' + A.dateLabel(d.to) : 'corte ' + A.dateLabel(d.selected)) + (d.simulation ? ' · simulación activa' : '') + '. Cambia el período en el panel para recalcular.';
+  }
+  function crumbs(z) {
+    const parts = [['zone', z.key === '*' ? 'Todas las zonas' : 'Zona ' + z.name, !V.cell && !V.agency]];
+    if (V.cell) { const [a, p] = V.cell.split('|'); parts.push(['cell', 'Activos ' + catLabel(a) + ' · Pasivos ' + catLabel(p), !V.agency]); }
+    if (V.agency) { const ag = z.agencies.find(x => x.cc === V.agency); parts.push(['agency', ag ? ag.short : V.agency, true]); }
+    return parts.map(([k, label, current], i) => (i ? '<i>›</i>' : '') + '<button type="button" data-crumb="' + k + '"' + (current ? ' aria-current="page"' : '') + '>' + (i === 0 ? '⌕ ' : '') + esc(label) + '</button>').join('');
+  }
+  function renderDrill() {
+    const z = currentZone();if (!z) return;
+    V.lastData = A.data();
+    $('zoneDrill').classList.remove('hidden');$('zoneCrumbs').innerHTML = crumbs(z);
+    const map = advisorsByCc();
+    if (V.agency) { const ag = z.agencies.find(x => x.cc === V.agency); if (ag) { $('zoneDrillBody').innerHTML = agencyDetail(ag, map ? map[ccKey(ag.cc)] || [] : null); A.hydratePhotos($('zoneDrillBody')); return; } V.agency = null; }
+    let list = z.agencies, title = 'Agencias de ' + (z.key === '*' ? 'todas las zonas' : 'la zona ' + z.name), sub = 'Ordenadas por cumplimiento de activos. Selecciona una agencia para ver sus productos y asesores.';
+    if (V.cell) { const [a, p] = V.cell.split('|'); list = list.filter(x => x.activos.cat === a && x.pasivos.cat === p); title = list.length + ' agencia' + (list.length === 1 ? '' : 's') + ' · Activos ' + catLabel(a) + ' · Pasivos ' + catLabel(p); }
+    list = list.slice().sort((x, y) => y.activos.ratio - x.activos.ratio);
+    $('zoneDrillBody').innerHTML = '<div class="v-drill-head"><div><h3>' + esc(title) + '</h3><p>' + esc(sub) + '</p></div></div><div class="tablewrap"><table class="v-agency-table"><thead><tr><th>Agencia</th><th>Activos · crec. / meta (M)</th><th>% Activos</th><th>Pasivos · crec. / meta (M)</th><th>% Pasivos</th><th>Estado</th><th>Asesores</th></tr></thead><tbody>'
+      + list.map(a => '<tr tabindex="0" data-agency="' + esc(a.cc) + '"><td><strong>' + esc(a.short) + '</strong><span class="multi" style="color:#8a919d">CC ' + esc(a.cc) + (z.key === '*' ? ' · ' + esc(a.zone) : '') + '</span></td><td' + neg(a.activos.growth) + '>' + mill(a.activos.growth) + ' / ' + mill(a.activos.plan) + '</td><td><span class="v-cat ' + a.activos.cat + '">' + pc(a.activos.ratio) + '</span></td><td' + neg(a.pasivos.growth) + '>' + mill(a.pasivos.growth) + ' / ' + mill(a.pasivos.plan) + '</td><td><span class="v-cat ' + a.pasivos.cat + '">' + pc(a.pasivos.ratio) + '</span></td><td>' + (a.top ? '<span class="pill status-good">Top</span>' : a.critical ? '<span class="pill status-low">Crítico</span>' : '<span class="muted">—</span>') + '</td><td>' + chips(map ? map[ccKey(a.cc)] || [] : null) + '</td></tr>').join('')
+      + '</tbody></table></div><p class="v-note">' + esc(periodNote()) + '</p>';
+  }
+  function agencyDetail(a, advisors) {
+    const kpi = (label, s) => '<div class="v-kpi"><span>' + label + '</span><strong' + neg(s.ratio) + '>' + pc(s.ratio) + '</strong><small>Crecimiento L ' + mill(s.growth) + ' M de una meta de L ' + mill(s.plan) + ' M · <span class="v-cat ' + s.cat + '">' + catLabel(s.cat) + '</span></small></div>';
+    let html = '<div class="v-drill-head"><div><span class="eyebrow">AGENCIA · CC ' + esc(a.cc) + ' · ' + esc(a.zone).toUpperCase() + '</span><h3>' + esc(a.name) + '</h3></div>' + (a.top ? '<span class="pill status-good">Top agencia</span>' : a.critical ? '<span class="pill status-low">Agencia crítica</span>' : '') + '</div>';
+    html += '<div class="v-kpis">' + kpi('Cartera activa', a.activos) + kpi('Cartera pasiva', a.pasivos) + '</div>';
+    html += '<div class="tablewrap"><table><thead><tr><th>Producto</th><th>Cartera</th><th>Crecimiento (M)</th><th>Meta (M)</th><th>% Cumplimiento</th><th></th></tr></thead><tbody>' + a.products.map(p => {
+      const w = p.ratio == null ? 0 : Math.max(0, Math.min(100, p.ratio * 100)), color = p.ratio == null ? '#ccc' : p.ratio < 0 ? '#c0283f' : p.ratio < .8 ? '#e3a04f' : p.ratio < 1 ? '#d6b13f' : '#3f8f4a';
+      return '<tr><td>' + esc(p.label) + '</td><td>' + (p.side === 'activa' ? 'Activa' : 'Pasiva') + '</td><td' + neg(p.growth) + '>' + mill(p.growth) + '</td><td>' + mill(p.plan) + '</td><td' + neg(p.ratio) + '>' + pc(p.ratio) + '</td><td><div class="v-bar"><i style="width:' + w + '%;background:' + color + '"></i></div></td></tr>';
+    }).join('') + '</tbody></table></div>';
+    html += '<div class="v-section-title" style="margin-top:22px"><div><h3>⌕ Asesores de ' + esc(a.short) + '</h3><p class="small">' + esc(periodNote()) + '</p></div></div>';
+    if (!advisors) return html + '<div class="notice">Abre el Panel de asesores para cargar los scores; luego vuelve a esta agencia.</div>';
+    if (!advisors.length) return html + '<p class="empty">No hay asesores asignados a la agencia ' + esc(a.cc) + ' en el período del panel.</p>';
+    const c = bandCounts(advisors), tiles = [...BANDS, { key: 'none', label: 'Sin score', cls: 'v-neutral' }].filter(b => b.key !== 'none' || c.none);
+    html += '<div class="v-band-tiles">' + tiles.map(b => '<button type="button" class="v-band-tile ' + b.cls + '" data-advisor-band="' + b.key + '" aria-pressed="' + (V.advisorBand === b.key) + '"><span>' + esc(b.label) + '</span><strong>' + c[b.key] + '</strong></button>').join('') + '</div>';
+    const shown = advisors.filter(r => !V.advisorBand || advisorBand(r) === V.advisorBand).slice().sort((x, y) => (y.score.value ?? -1) - (x.score.value ?? -1) || x.name.localeCompare(y.name, 'es'));
+    html += '<div class="v-advisors">' + shown.map(r => { const k = advisorBand(r); return '<button type="button" class="v-advisor" data-advisor="' + esc(r.id) + '">' + A.portrait(r) + '<span><strong>' + esc(r.name) + '</strong><small>Empleado ' + esc(r.id) + ' · <span class="v-chip b-' + k + '">' + esc(bandLabel(k)) + '</span>' + (r.multi ? ' · varias agencias' : '') + '</small></span><b>' + (Number.isFinite(r.score.value) ? f1.format(r.score.value) : '—') + '<small>score</small></b></button>'; }).join('') + '</div>';
+    html += '<p class="v-note">Bandas: Alto Rendimiento ≥100 · Potencial 80-99 · En desarrollo 60-79 · Acompañamiento &lt;60, sobre el score del panel. Un asesor con varias agencias aparece en cada una con su resultado total. Clic en un asesor para abrir su perfil completo.</p>';
+    return html;
+  }
+  $('zoneSelect').addEventListener('change', () => { V.zoneKey = $('zoneSelect').value; V.cell = null; V.agency = null; V.advisorBand = null; renderZone(); });
+  const focusDrill = () => $('zoneDrill').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('zoneMatrix').addEventListener('click', e => { const b = e.target.closest('[data-cell]'); if (!b || b.disabled) return; V.cell = V.cell === b.dataset.cell ? null : b.dataset.cell; V.agency = null; V.advisorBand = null; renderZone(); if (V.cell) focusDrill(); });
+  ['zoneTop', 'zoneCritical'].forEach(id => $(id).addEventListener('click', e => { const b = e.target.closest('[data-agency]'); if (!b) return; V.agency = b.dataset.agency; V.cell = null; V.advisorBand = null; renderZone(); focusDrill(); }));
+  $('zoneCrumbs').addEventListener('click', e => { const b = e.target.closest('[data-crumb]'); if (!b) return; if (b.dataset.crumb === 'zone') { V.cell = null; V.agency = null; } else if (b.dataset.crumb === 'cell') V.agency = null; V.advisorBand = null; renderZone(); });
+  $('zoneDrillBody').addEventListener('click', e => {
+    const adv = e.target.closest('[data-advisor]');if (adv) { A.showDetail(adv.dataset.advisor); return; }
+    const band = e.target.closest('[data-advisor-band]');if (band) { V.advisorBand = V.advisorBand === band.dataset.advisorBand ? null : band.dataset.advisorBand; renderDrill(); return; }
+    const row = e.target.closest('[data-agency]');if (row) { V.agency = row.dataset.agency; V.advisorBand = null; renderZone(); focusDrill(); }
+  });
+  $('zoneDrillBody').addEventListener('keydown', e => { const row = e.target.closest('tr[data-agency]'); if (row && e.key === 'Enter') { V.agency = row.dataset.agency; renderZone(); } });
+
+  /* ---------- Centro de Negocios · Libranza ---------- */
+  async function loadCn(force) {
+    if (V.cn && !force) { renderCn(); return; }
+    statusBox('cnStatus', loadingHtml('Calculando el score de Libranza…'));
+    try {
+      const data = await A.rpc('getBusinessCenter');V.cn = data;
+      if (!data.available) { statusBox('cnStatus', unavailable('libranza', data.status)); $('cnBody').classList.add('hidden'); return; }
+      statusBox('cnStatus', data.hasHistory ? '' : '<div class="notice">Falta la Base de colocaciones (histórico mensual): sin ella no se calculan Cumplimiento acumulado ni Constancia.</div>');
+      renderCn();
+    } catch (e) { statusBox('cnStatus', '<div class="notice">' + esc(e.message) + '</div>'); }
+  }
+  const cnBand = key => (V.cn.config.bands.find(b => b.key === key) || {});
+  const bandCls = key => ({ high: 'v-good', potential: 'v-good', development: 'v-soft', support: 'v-bad' }[key] || 'v-neutral');
+  const heat = r => r == null ? 'h0' : r >= 1 ? 'h4' : r > .8 ? 'h3' : r >= .6 ? 'h2' : 'h1';
+  function renderCn() {
+    const d = V.cn;$('cnBody').classList.remove('hidden');
+    const c = d.config, max = c.weights.cumplimiento * c.cap / 100 + c.weights.constancia, months = d.months;
+    $('cnCut').textContent = 'Corte ' + A.dateLabel(d.date) + (months.length ? ' · historial ' + months[0].label + '–' + months[months.length - 1].label + ' ' + d.year : '');
+    $('cnFormula').innerHTML = 'Score = ' + c.weights.cumplimiento + ' × min(Cumplimiento acumulado, ' + c.cap + '%) + ' + c.weights.constancia + ' × Constancia.<br>Constancia = meses con cumplimiento &gt; ' + c.constancyThreshold + '% ÷ meses evaluados. Score máximo con estos pesos: <b>' + f1.format(max) + '</b>.';
+    $('cnBands').innerHTML = c.bands.map(b => '<span>' + esc(b.label) + '</span><span>' + esc(b.range || '') + '</span>').join('');
+    const total = d.executives.length, zoneLines = d.zones.map(z => '<li>' + esc(z.label) + ' → ' + z.executives + '</li>').join('');
+    $('cnHeadcount').innerHTML = '<div class="v-big"><strong>' + total + '</strong><span>Ejecutivos</span></div><div><ul>' + zoneLines + (d.vacancies ? '<li><small>' + d.vacancies + ' vacante' + (d.vacancies === 1 ? '' : 's') + ' (' + d.zones.filter(z => z.vacancies).map(z => z.vacancies + ' ' + esc(z.short || z.label)).join(', ') + ')</small></li>' : '') + '</ul>'
+      + '<div class="v-meta">Meta Mensual x Ejecutivo<strong>' + (d.metaMensual ? 'HNL ' + f1.format(d.metaMensual / 1e6).replace(/[.,]0$/, '') + 'M' : '—') + '</strong></div></div>';
+    $('cnZones').innerHTML = d.zones.map((z, i) => zonePanel(z, i + 1)).join('');
+    A.hydratePhotos($('cnZones'));
+    renderCnTable();
+  }
+  function zonePanel(z, n) {
+    const list = V.cn.executives.filter(e => e.zoneKey === z.key), sel = V.cnBand[z.key] || null;
+    const cell = key => { const b = cnBand(key); return '<button type="button" data-cn-band="' + key + '" data-cn-zone="' + esc(z.key) + '" aria-pressed="' + (sel === key) + '"><strong>' + esc(b.label) + '</strong><b>' + (z.counts[key] || 0) + '</b></button>'; };
+    const names = key => { const people = list.filter(e => e.band && e.band.key === key).sort((a, b) => b.score - a.score);
+      return people.length ? people.map(e => '<button type="button" class="v-link" data-exec="' + esc(e.id) + '">' + esc(e.short) + '<small>' + f1.format(e.score) + '</small></button>').join('') : '<p class="v-empty-list">Sin ejecutivos en esta banda.</p>'; };
+    const listBox = (key, extra) => '<div class="v-list ' + bandCls(key) + '"><div class="v-list-head"><h3>' + esc(cnBand(key).label) + '</h3>' + (extra || '') + '</div>' + names(key) + '</div>';
+    const lists = sel ? '<div class="v-cn-lists single">' + listBox(sel, '<button type="button" data-cn-reset="' + esc(z.key) + '">Ver resumen</button>') + '</div>' : '<div class="v-cn-lists">' + listBox('potential') + listBox('support') + '</div>';
+    const growth = z.libranza ? '<strong>' + pc(z.libranza.ratio) + '</strong><span>Crecimiento<br>Libranza ' + esc(z.short || z.label) + '</span>' : '<strong>—</strong><span>Crecimiento Libranza<br>(sin archivo de crecimiento)</span>';
+    const unscored = list.filter(e => !e.band);
+    return '<section class="v-zone-panel"><div class="v-step"><b>' + n + '</b><span>' + esc(z.label) + '</span></div><div class="v-zone-main"><div class="v-growth" title="' + (z.libranza ? esc('Libranza ' + z.libranza.zones.join(' + ') + ': L ' + mill(z.libranza.growth) + ' M de L ' + mill(z.libranza.plan) + ' M') : '') + '">' + growth + '</div><div class="v-quad">' + cell('potential') + cell('high') + cell('support') + cell('development') + '</div></div>' + lists
+      + '<p class="v-zone-foot">Mes en curso: ' + cash(z.month.amount) + ' de ' + cash(z.month.plan) + ' (' + pc(z.month.ratio) + ') · ' + f0.format(z.month.units || 0) + ' créditos.' + (unscored.length ? ' Sin historial para calificar: ' + unscored.map(e => '<button type="button" class="v-link" style="display:inline;width:auto;font-size:10px" data-exec="' + esc(e.id) + '">' + esc(e.short) + '</button>').join(', ') + '.' : '') + '</p></section>';
+  }
+  function renderCnTable() {
+    const d = V.cn, months = d.months, zoneOrder = d.zones.map(z => z.key);
+    const rows = d.executives.slice().sort((a, b) => zoneOrder.indexOf(a.zoneKey) - zoneOrder.indexOf(b.zoneKey) || (b.score ?? -1) - (a.score ?? -1));
+    $('cnTable').innerHTML = '<table class="v-table v-exec-table"><thead><tr><th>Ejecutivo</th><th>Zona</th><th>Oficial</th>' + months.map(m => '<th>' + esc(m.label) + '</th>').join('') + '<th>Cumpl. acumulado</th><th>Constancia</th><th>Score</th><th>Calificación</th><th>Mes en curso</th></tr></thead><tbody>'
+      + rows.map(e => { const byKey = Object.fromEntries(e.history.months.map(m => [m.key, m]));
+        return '<tr tabindex="0" data-exec="' + esc(e.id) + '"><td><strong>' + esc(e.name) + '</strong></td><td>' + esc(e.zoneLabel.replace(/^Zona\s+/, '')) + '</td><td>' + esc(e.oficial) + '</td>' + months.map(m => { const x = byKey[m.key]; return '<td class="v-heat ' + heat(x ? x.ratio : null) + '">' + (x ? pc(x.ratio) : '—') + '</td>'; }).join('')
+          + '<td>' + pc(e.history.cumplimiento) + '</td><td>' + (e.history.monthsCount ? e.history.metCount + '/' + e.history.monthsCount : '—') + '</td><td><b>' + (e.score == null ? '—' : f1.format(e.score)) + '</b></td><td>' + (e.band ? '<span class="v-chip b-' + e.band.key + '">' + esc(e.band.label) + '</span>' : '<span class="v-chip b-none">Sin historial</span>') + '</td><td class="v-heat ' + heat(e.current.ratio) + '">' + pc(e.current.ratio) + '</td></tr>'; }).join('') + '</tbody></table>';
+    $('cnTableNote').textContent = 'Colores: verde ≥100%, verde claro >' + d.config.constancyThreshold + '%, amarillo 60-' + d.config.constancyThreshold + '%, rojo <60%. El mes en curso (corte ' + A.dateLabel(d.date) + ') es informativo y no entra al score. El historial se vincula por nombre dentro del mismo CNG.';
+  }
+  function monthChart(e) {
+    const months = e.history.months.map(m => ({ label: m.label, ratio: m.ratio, current: false })).concat([{ label: 'En curso', ratio: e.current.ratio, current: true }]);
+    const w = 640, h = 230, l = 40, r = 12, t = 16, b = 34, max = Math.max(1.3, ...months.map(m => m.ratio || 0)) * 1.05, gap = (w - l - r) / months.length;
+    const y = v => t + (1 - v / max) * (h - t - b);
+    let s = '<svg viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Cumplimiento mensual de ' + esc(e.name) + '"><defs><pattern id="cnHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="6" fill="#db163455"/></pattern></defs>';
+    [[1, '100%', '#5f6673'], [V.cn.config.constancyThreshold / 100, V.cn.config.constancyThreshold + '%', '#b0b6c1']].forEach(([v, label, color]) => { s += '<line x1="' + l + '" x2="' + (w - r) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="' + color + '" stroke-dasharray="4 4"/><text x="' + (l - 6) + '" y="' + (y(v) + 3) + '" text-anchor="end" font-size="9" fill="' + color + '">' + label + '</text>'; });
+    months.forEach((m, i) => { const v = Math.max(0, m.ratio || 0), x = l + i * gap + gap * .18, bw = gap * .64, color = m.current ? 'url(#cnHatch)' : m.ratio >= 1 ? '#3f8f4a' : m.ratio > V.cn.config.constancyThreshold / 100 ? '#8cc084' : m.ratio >= .6 ? '#e3b94f' : '#db6b7b';
+      s += '<rect x="' + x + '" y="' + y(v) + '" width="' + bw + '" height="' + (y(0) - y(v)) + '" rx="3" fill="' + color + '"' + (m.current ? ' stroke="#db1634"' : '') + '><title>' + esc(m.label + ': ' + pc(m.ratio)) + '</title></rect><text x="' + (x + bw / 2) + '" y="' + (y(v) - 5) + '" text-anchor="middle" font-size="9" fill="#4a505b">' + pc(m.ratio) + '</text><text x="' + (x + bw / 2) + '" y="' + (h - 14) + '" text-anchor="middle" font-size="10" fill="#5f6673">' + esc(m.label) + '</text>'; });
+    return s + '</svg>';
+  }
+  function showExec(id) {
+    const e = V.cn.executives.find(x => x.id === id);if (!e) return;
+    const c = V.cn.config, max = c.weights.cumplimiento * c.cap / 100 + c.weights.constancia, h = e.history;
+    const person = { id: e.employee || e.id, name: e.name };
+    let html = '<div class="advisor-heading">' + A.portrait(person, true) + '<div><span class="eyebrow">CENTRO DE NEGOCIOS · LIBRANZA</span><h2>' + esc(e.name) + '</h2><p>' + esc(e.zoneLabel) + ' · CNG ' + esc(e.cc) + ' · Oficial ' + esc(e.oficial) + (e.employee ? ' · Empleado ' + esc(e.employee) : '') + '</p></div></div>';
+    html += '<div class="scorebig"><div class="ring" style="background:conic-gradient(#db1634 ' + Math.min(100, Math.max(0, e.score || 0)) + '%,#e8eaf0 0)"><strong>' + (e.score == null ? '—' : f1.format(e.score)) + '</strong></div><div>' + (e.band ? '<span class="v-chip b-' + e.band.key + '" style="font-size:12px;padding:4px 10px">' + esc(e.band.label) + '</span>' : '<span class="v-chip b-none">Sin historial</span>') + '<p style="margin-top:8px">Score máximo con los pesos actuales: ' + f1.format(max) + ' · ' + h.monthsCount + ' meses evaluados</p></div></div>';
+    if (!h.matched) html += '<div class="notice">No se encontró a este ejecutivo en la Base de colocaciones (CNG ' + esc(e.cc) + '). Puede ser un ingreso reciente o un nombre distinto. Se muestra solo el mes en curso.</div>';
+    else {
+      if (h.sourceName && h.sourceName.toLowerCase() !== e.name.toLowerCase()) html += '<p class="small">Historial vinculado con «' + esc(h.sourceName) + '».</p>';
+      html += '<h3>Qué explica el score</h3><div class="component"><span>Cumplimiento de meta acumulado <span class="muted">(' + c.weights.cumplimiento + ' pts · tope ' + c.cap + '%)</span><small class="multi" style="color:#8a919d">' + cash(h.principalSum) + ' colocado ÷ ' + cash(h.metaSum) + ' de meta</small></span><strong>' + pc(h.cumplimiento) + ' → ' + f1.format(e.components.cumplimiento) + ' pts</strong></div>';
+      html += '<div class="component"><span>Constancia <span class="muted">(' + c.weights.constancia + ' pts)</span><small class="multi" style="color:#8a919d">' + h.metCount + ' de ' + h.monthsCount + ' meses con cumplimiento &gt; ' + c.constancyThreshold + '%</small></span><strong>' + pc(h.constancia) + ' → ' + f1.format(e.components.constancia) + ' pts</strong></div>';
+      if (e.components.capped) html += '<p class="small">El cumplimiento supera el tope: se reconoce hasta ' + c.cap + '%.</p>';
+    }
+    html += '<h3>Cumplimiento mensual</h3><div class="v-chart">' + monthChart(e) + '</div>';
+    if (h.months.length) html += '<div class="tablewrap"><table><thead><tr><th>Mes</th><th>Meta</th><th>Colocado</th><th>Cumplimiento</th><th>Constancia</th></tr></thead><tbody>' + h.months.map(m => '<tr><td>' + esc(m.label) + ' ' + m.key.slice(0, 4) + '</td><td>' + cash(m.meta) + '</td><td>' + cash(m.principal) + '</td><td class="v-heat ' + heat(m.ratio) + '">' + pc(m.ratio) + '</td><td>' + (m.met ? '✓ Cuenta' : '—') + '</td></tr>').join('') + '</tbody></table></div>';
+    const cur = e.current;
+    html += '<h3>Mes en curso · corte ' + A.dateLabel(V.cn.date) + '</h3><div class="digital-kpis"><div><span>Colocado</span><strong>' + cash(cur.amount) + '</strong><small>' + f0.format(cur.units || 0) + ' créditos</small></div><div><span>Avance contra plan</span><strong>' + pc(cur.ratio) + '</strong><small>Plan ' + cash(cur.plan) + '</small></div></div>';
+    html += '<div class="component"><span>Digital · TDC</span><strong>' + f0.format(cur.tdc || 0) + '</strong></div><div class="component"><span>Digital · Cuenta móvil</span><strong>' + f0.format(cur.cuentaMovil || 0) + '</strong></div><div class="component"><span>Digital · App</span><strong>' + f0.format(cur.app || 0) + '</strong></div><p class="small" style="margin-top:10px">El mes en curso es parcial: se muestra como avance y no modifica el score.</p>';
+    A.openDrawer(html);
+  }
+  $('cnZones').addEventListener('click', e => {
+    const ex = e.target.closest('[data-exec]');if (ex) { showExec(ex.dataset.exec); return; }
+    const b = e.target.closest('[data-cn-band]');if (b) { const z = b.dataset.cnZone; V.cnBand[z] = V.cnBand[z] === b.dataset.cnBand ? null : b.dataset.cnBand; renderCn(); return; }
+    const r = e.target.closest('[data-cn-reset]');if (r) { V.cnBand[r.dataset.cnReset] = null; renderCn(); }
+  });
+  $('cnTable').addEventListener('click', e => { const tr = e.target.closest('[data-exec]'); if (tr) showExec(tr.dataset.exec); });
+  $('cnTable').addEventListener('keydown', e => { const tr = e.target.closest('[data-exec]'); if (tr && e.key === 'Enter') showExec(tr.dataset.exec); });
+
+  /* ---------- Fuentes complementarias ---------- */
+  $('sourcesPage').insertAdjacentHTML('afterbegin', '<div class="card v-extras-card"><div class="sectiontitle" style="padding:0 0 10px"><div><h2>Fuentes complementarias</h2><p>Crecimiento por CC y Libranza de Centro de Negocios. Acepta .xlsx, Google Sheets o .csv en la misma carpeta.</p></div><button class="button" id="extrasSyncBtn" type="button">↻ Actualizar complementarias</button></div><div id="extrasList"><p class="small muted">Cargando estado…</p></div></div>');
+  async function loadExtrasStatus() {
+    $('extrasSyncBtn').classList.toggle('hidden', !A.canManage());
+    try { V.extras = await A.rpc('getExtrasStatus'); renderExtras(); } catch (e) { $('extrasList').innerHTML = '<p class="notice">' + esc(e.message) + '</p>'; }
+  }
+  function renderExtras() {
+    const s = V.extras;if (!s) return;
+    $('extrasList').innerHTML = Object.keys(s.sources).map(t => { const x = s.sources[t];
+      return '<div class="sourceitem"><div><strong>' + esc(x.label) + '</strong><small>' + esc(x.name || 'Pendiente: no se encontró el archivo') + '</small></div><div>' + (x.available ? f0.format(x.rows || 0) + ' registros' : '—') + '<small>' + esc(x.detail || '') + '</small></div><div>' + esc(x.format ? x.format.toUpperCase() : '—') + '<small>' + (x.modified ? 'Modificado ' + new Date(x.modified).toLocaleString('es-HN') : '') + '</small></div></div>'
+        + (s.errors && s.errors[t] ? '<p class="notice">' + esc(s.errors[t]) + '</p>' : ''); }).join('') + (s.updated ? '<p class="small muted" style="margin-top:10px">Publicado ' + new Date(s.updated).toLocaleString('es-HN') + '</p>' : '');
+  }
+  async function syncExtras(force) {
+    if (!A.canManage()) return;
+    $('extrasSyncBtn').disabled = true;
+    try {
+      const r = await A.rpc(force ? 'syncExtrasForzado' : 'syncExtras');
+      V.extras = r.status;renderExtras();V.zone = null;V.cn = null;
+      const errors = Object.values((r.status && r.status.errors) || {});
+      if (errors.length) A.notice('Fuentes complementarias: ' + errors.join(' · '));
+      if (V.page === 'zone') loadZone(); else if (V.page === 'cn') loadCn();
+    } catch (e) { A.notice('Fuentes complementarias: ' + e.message); } finally { $('extrasSyncBtn').disabled = false; }
+  }
+  $('extrasSyncBtn').addEventListener('click', () => syncExtras(true));
+  // «Actualizar datos» también revisa las fuentes complementarias (no comparte el bloqueo de la importación principal).
+  $('syncBtn').addEventListener('click', () => syncExtras(false));
+})();
+</script>
